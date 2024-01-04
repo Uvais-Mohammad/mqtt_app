@@ -15,7 +15,7 @@ class TemperatureSlider extends StatelessWidget {
       child: SleekCircularSlider(
         min: 16,
         max: 30,
-        initialValue: 24,
+        initialValue: 16,
         appearance: CircularSliderAppearance(
           customColors: CustomSliderColors(
             trackColor: Colors.grey[300],
@@ -44,27 +44,32 @@ class TemperatureSlider extends StatelessWidget {
               );
         },
         innerWidget: (percentage) {
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  '${percentage.toInt()}°C',
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontSize: 30,
-                  ),
+          return BlocSelector<AirConditionBloc, AirConditionState, String>(
+            selector: (state) => state.temperature,
+            builder: (context, state) {
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      '$state°C',
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 30,
+                      ),
+                    ),
+                    const Text(
+                      'Slide to set temperature',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Color(0xFFA0A3B1),
+                        fontSize: 14,
+                      ),
+                    ),
+                  ],
                 ),
-                const Text(
-                  'Slide to set temperature',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Color(0xFFA0A3B1),
-                    fontSize: 14,
-                  ),
-                ),
-              ],
-            ),
+              );
+            },
           );
         },
       ),
